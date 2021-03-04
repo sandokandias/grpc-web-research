@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        form.form-example {
+            display: table;
+        }
+        div.form-example {
+            display: table-row;
+        }
+        label, input {
+            display: table-cell;
+            margin-bottom: 10px;
+        }
+        label {
+            padding-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-example">
+        <label for="lb1">Time: </label>
+        <label id="lbunix"></label>
+        <label id="lbutc"></label>
+    </div>
+    <div class="form-example">
+        <input type="button" value="Get Time" onclick="getTime()">
+    </div>
+
+    <script src="dist/main.js"></script>
+</body>
+</html>

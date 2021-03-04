@@ -13,12 +13,21 @@ DIST=dist
 DIST_MAC=$(DIST)/darwin
 DIST_LINUX=$(DIST)/linux
 DIST_WIN=$(DIST)/windows
-PROTO_PKG=internal/grpc/api
+PROTO_GO_DIR=internal/grpc/api
+PROTO_JS_DIR=web-ui/grpc/api
 
 all: clean clean-proto gen-proto test build
 
-gen-proto:
-	protoc --go_out=$(PROTO_PKG) --go_opt=paths=source_relative --go-grpc_out=$(PROTO_PKG) -I proto --go-grpc_opt=paths=source_relative proto/*.proto
+gen-go-proto:
+	protoc --go_out=$(PROTO_GO_DIR) \
+		--go_opt=paths=source_relative \
+		--go-grpc_out=$(PROTO_GO_DIR) \
+		-I proto --go-grpc_opt=paths=source_relative proto/*.proto
+
+gen-js-proto:
+	protoc -I proto proto/*.proto \
+	    --js_out=import_style=commonjs:$(PROTO_JS_DIR) \
+	    --grpc-web_out=import_style=commonjs,mode=grpcwebtext:$(PROTO_JS_DIR)
 
 build-linux:
 	mkdir -p $(DIST_LINUX)
@@ -42,7 +51,7 @@ clean:
 	rm -rf $(BIN)
 
 clean-proto:
-	rm -rf $(PROTO_PKG)/*
+	rm -rf $(PROTO_GO_DIR)/*
 
 release: build-linux
 	docker build -t sandokandias/$(BIN_NAME) .
