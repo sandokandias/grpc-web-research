@@ -18,3 +18,5 @@ dist/
 bin/
 
 .vscode/
+
+node_modules/
