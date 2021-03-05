@@ -1,13 +1,8 @@
 SHELL=/bin/bash
-# Go aliases
-GO_CMD=go
-GO_BUILD=$(GO_CMD) build
-GO_CLEAN=$(GO_CMD) clean
-GO_TEST=$(GO_CMD) test
-GO_TOOL_COVER=$(GO_CMD) tool cover
-GO_GET=$(GO_CMD) get
+
 BIN_NAME=timeservice
-CMD_PATH=./backend/cmd/server/main.go
+CMD_SERVER_PATH=./backend/cmd/server/main.go
+CMD_CLIENT_PATH=./backend/cmd/client/main.go
 BIN=bin
 DIST=dist
 DIST_MAC=$(DIST)/darwin
@@ -16,7 +11,7 @@ DIST_WIN=$(DIST)/windows
 PROTO_GO_DIR=backend/internal/grpc/api
 PROTO_JS_DIR=frontend/grpc/api
 
-all: clean clean-proto gen-go-proto test build
+all: clean clean-proto gen-go-proto gen-js-proto test build
 
 gen-go-proto:
 	protoc --go_out=$(PROTO_GO_DIR) \
@@ -31,20 +26,26 @@ gen-js-proto:
 
 build-linux:
 	mkdir -p $(DIST_LINUX)
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GO_BUILD) -o ./$(DIST_LINUX)/$(BIN_NAME) -v $(CMD_PATH)
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ./$(DIST_LINUX)/$(BIN_NAME) -v $(CMD_SERVER_PATH)
 
 build-mac:
 	mkdir -p $(DIST_MAC)
-	GOOS=darwin GOARCH=amd64 $(GO_BUILD) -o ./$(DIST_MAC)/$(BIN_NAME) -v $(CMD_PATH)
+	GOOS=darwin GOARCH=amd64 go build -o ./$(DIST_MAC)/$(BIN_NAME) -v $(CMD_SERVER_PATH)
 
 build-windows:
 	mkdir -p $(DIST_WIN)
-	GOOS=windows GOARCH=amd64 $(GO_BUILD) -o ./$(DIST_WIN)/$(BIN_NAME).exe -v $(CMD_PATH)
+	GOOS=windows GOARCH=amd64 go build -o ./$(DIST_WIN)/$(BIN_NAME).exe -v $(CMD_SERVER_PATH)
 
 build: build-linux build-mac build-windows
 
 test:
 	./test.sh
+
+run-server:
+	go run $(CMD_SERVER_PATH)
+
+run-go-client:
+	go run $(CMD_CLIENT_PATH)
 
 clean:
 	rm -rf $(DIST)
@@ -52,6 +53,7 @@ clean:
 
 clean-proto:
 	rm -rf $(PROTO_GO_DIR)/*
+	rm -rf $(PROTO_JS_DIR)/*
 
 release: build-linux
 	docker build -t sandokandias/$(BIN_NAME) .
