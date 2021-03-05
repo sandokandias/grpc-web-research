@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"log"
 	"time"
@@ -12,12 +13,14 @@ import (
 	"github.com/gosuri/uitable"
 )
 
-const (
-	address = "localhost:9000"
+var (
+	address = flag.String("address", "localhost:9000", "Address of the server in format <ip/name:port>. e.g.: 0.0.0.0:9000")
 )
 
 func main() {
-	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	flag.Parse()
+
+	conn, err := grpc.Dial(*address, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
