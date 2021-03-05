@@ -2,32 +2,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <style type="text/css">
-        form.form-example {
-            display: table;
-        }
-        div.form-example {
-            display: table-row;
-        }
-        label, input {
-            display: table-cell;
-            margin-bottom: 10px;
-        }
-        label {
-            padding-right: 10px;
-        }
-    </style>
 </head>
 <body>
-    <div class="form-example">
-        <label for="lb1">Time: </label>
-        <label id="lbunix"></label>
-        <label id="lbutc"></label>
-    </div>
-    <div class="form-example">
+    <div>
         <input type="button" value="Get Time" onclick="getTime()">
     </div>
-
+    <table>
+    </table>
+    <div id="error">
+        <label for="error" id="error"></label>
+    </div>
     <script src="dist/main.js"></script>
 </body>
 </html>

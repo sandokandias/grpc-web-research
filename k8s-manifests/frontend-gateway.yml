@@ -1,18 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: timebackend
-spec:
-  host: timebackend
-  subsets:
-  - name: v1
-    labels:
-      version: v1
----
-apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: gateway
+  name: frontend-gateway
 spec:
   selector:
     istio: ingressgateway
@@ -27,21 +16,19 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: vs
+  name: frontend-ingress
 spec:
   hosts:
   - "*"
   gateways:
-  - gateway
+  - frontend-gateway
   http:
   - match:
-    - port: 80
+    - uri:
+        prefix: /proto.TimeService
     route:
     - destination:
         host: timebackend
-        port:
-          number: 9000
-        subset: v1
     corsPolicy:
       allowOrigin:
         - "*"
@@ -70,3 +57,8 @@ spec:
         - grpc-status
         - grpc-message
       allowCredentials: true
+  - route:
+    - destination:
+        host: timefrontend
+        port:
+          number: 80

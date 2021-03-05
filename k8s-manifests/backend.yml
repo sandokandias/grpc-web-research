@@ -2,30 +2,35 @@ apiVersion: v1
 kind: Service
 metadata:
   name: timebackend
-  labels:
-    app: timebackend
 spec:
-  ports:
-  - name: grpc-port
-    port: 9000
+  type: ClusterIP
   selector:
     app: timebackend
+  ports:
+  - name: grpc-web
+    port: 9000
+    targetPort: 9000
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: timebackend
+  labels:
+    app: timebackend
 spec:
+  selector:
+    matchLabels:
+      app: timebackend
   replicas: 1
   template:
     metadata:
       labels:
         app: timebackend
-        version: v1
     spec:
+      serviceAccountName: default
       containers:
-      - name: timebackend
-        image: sandokandias/time-backend
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 9000
+        - name: timebackend
+          image: sandokandias/time-backend
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 9000
