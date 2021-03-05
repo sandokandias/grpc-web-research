@@ -27,11 +27,18 @@ $ istioctl install --set profile=demo
 ```bash
 $ kubectl label namespace default istio-injection=enabled
 ```
+4. Install kiali and addons (optional)
+```bash
+kubectl apply -f <istio_dir>/samples/addons
+```
+5. Kiali dashboad (optional)
+```bash
+$ istioctl dashboard kiali
+``` 
 
 ## Cluster down
 ```bash
-$ k3d cluster stop multinode-cluster 
-$ k3d cluster delete multinode-cluster
+$ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 ```
 
 ## Option 1: grpc-web protocol
@@ -52,7 +59,7 @@ $ kubectl apply -f ./k8s-manifests
 $ kubectl -n istio-system get service istio-ingressgateway \
    -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
 ```
-3. Open the browser with http://<gateway_address>/
+3. Open the browser with http://<gateway_address>/ and make some requests
 
 
 ## Option 2: custom BFF (Backend For Frontend) exposing HTPP and consuming GRPC
