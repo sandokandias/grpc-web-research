@@ -7,16 +7,16 @@ GO_TEST=$(GO_CMD) test
 GO_TOOL_COVER=$(GO_CMD) tool cover
 GO_GET=$(GO_CMD) get
 BIN_NAME=timeservice
-CMD_PATH=./cmd/server/main.go
+CMD_PATH=./backend/cmd/server/main.go
 BIN=bin
 DIST=dist
 DIST_MAC=$(DIST)/darwin
 DIST_LINUX=$(DIST)/linux
 DIST_WIN=$(DIST)/windows
-PROTO_GO_DIR=internal/grpc/api
-PROTO_JS_DIR=web-ui/grpc/api
+PROTO_GO_DIR=backend/internal/grpc/api
+PROTO_JS_DIR=frontend/grpc/api
 
-all: clean clean-proto gen-proto test build
+all: clean clean-proto gen-go-proto test build
 
 gen-go-proto:
 	protoc --go_out=$(PROTO_GO_DIR) \

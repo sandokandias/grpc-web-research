@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/sandokandias/grpc-consumer-research/internal/grpc/api"
+	"github.com/sandokandias/grpc-consumer-research/backend/internal/grpc/api"
 	"google.golang.org/grpc"
 
 	"github.com/gosuri/uitable"

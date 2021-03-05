@@ -2,9 +2,10 @@ package service
 
 import (
 	"context"
+	"log"
 	"time"
 
-	"github.com/sandokandias/grpc-consumer-research/internal/grpc/api"
+	"github.com/sandokandias/grpc-consumer-research/backend/internal/grpc/api"
 )
 
 // TimeService unary rpc service implementation
@@ -22,6 +23,8 @@ func (TimeService) GetTime(ctx context.Context, request *api.TimeRequest) (*api.
 	now := time.Now()
 	unix := now.Unix()
 	utc := now.String()
+
+	log.Printf("get unix and utc from: %v\n", now)
 
 	return &api.TimeResponse{
 		Unix: unix,
