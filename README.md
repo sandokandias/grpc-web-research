@@ -36,7 +36,7 @@ $ k3d cluster delete multinode-cluster
 
 ## Option 1: grpc-web protocol
 ### app graph
-![alt text](https://github.com/sandokandias/grpc-consumer-research/blob/main/docs/grpc-web-digram.png?raw=true)
+![alt text](https://github.com/sandokandias/grpc-consumer-research/blob/main/docs/grpc-web-diagram.png?raw=true)
 
 ### benefits
 
