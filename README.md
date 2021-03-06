@@ -5,7 +5,7 @@ Will be presented 2 options of architecture:
  - grpc-web protocol (https://grpc.io/docs/platforms/web/)
  - custom BFF (Backend For Frontend) exposing HTPP and consuming GRPC
 
-## Tools must be installed:
+## Tools must be installed
  - docker (https://docs.docker.com/engine/install/)
  - kubectl (https://kubernetes.io/docs/tasks/tools/)
  - k3d (https://k3d.io/)
@@ -41,12 +41,12 @@ $ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 ```
 
 ## Option 1: grpc-web protocol
-### app graph
+### App graph
 ![alt text](https://github.com/sandokandias/grpc-consumer-research/blob/main/docs/grpc-web-diagram.png?raw=true)
 
-### benefits
+### Benefits
 
-### cons
+### Cons
 
 ### How to play
 1. Apply k8s objects
