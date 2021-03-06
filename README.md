@@ -5,12 +5,11 @@ Will be presented 2 options of architecture:
  - grpc-web protocol (https://grpc.io/docs/platforms/web/)
  - custom BFF (Backend For Frontend) exposing HTPP and consuming GRPC
 
-## Tools that must be installed:
+## Tools must be installed:
  - docker (https://docs.docker.com/engine/install/)
  - kubectl (https://kubernetes.io/docs/tasks/tools/)
  - k3d (https://k3d.io/)
  - istioctl (https://istio.io/latest/docs/setup/getting-started)
-  
 
 ## Cluster setup
 1. Create the k3d cluster
