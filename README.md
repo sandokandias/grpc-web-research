@@ -5,13 +5,13 @@ Will be presented 2 options of architecture:
  - grpc-web protocol (https://grpc.io/docs/platforms/web/)
  - custom BFF (Backend For Frontend) exposing HTPP and consuming GRPC
 
-## Tools must be installed
+## Install tools
  - docker (https://docs.docker.com/engine/install/)
  - kubectl (https://kubernetes.io/docs/tasks/tools/)
  - k3d (https://k3d.io/)
  - istioctl (https://istio.io/latest/docs/setup/getting-started)
 
-## Cluster setup
+## Setup k3d cluster (local)
 1. Create the k3d cluster
 ```bash
 $ k3d cluster create multinode-cluster \
@@ -35,7 +35,7 @@ kubectl apply -f <istio_dir>/samples/addons
 $ istioctl dashboard kiali
 ``` 
 
-## Cluster down
+## Down k3d cluster
 ```bash
 $ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 ```

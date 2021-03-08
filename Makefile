@@ -62,6 +62,11 @@ build-backend-img:
 build-frontend-img:
 	docker build -t sandokandias/$(BIN_FRONTEND_NAME) -f frontend/Dockerfile .
 
-release: build-backend-img build-frontend-img
-	docker push sandokandias/$(BIN_BACKEND_NAME)
+release-frontend: build-frontend-img
 	docker push sandokandias/$(BIN_FRONTEND_NAME)
+
+release-backend: build-backend-img
+	docker push sandokandias/$(BIN_BACKEND_NAME)
+
+release: release-backend release-frontend
+	
