@@ -1,9 +1,9 @@
-# grpc-consumer-research
-R&amp;D about how to consume grpc services by traditional http clients running on browser.
+# gRPC-consumer-research
+R&amp;D about how to consume gRPC services by traditional http clients.
 
 Will be presented 2 options of architecture: 
- - grpc-web protocol (https://grpc.io/docs/platforms/web/)
- - custom BFF (Backend For Frontend) exposing HTPP and consuming GRPC
+ - gRPC-web protocol for browser clients (https://grpc.io/docs/platforms/web/)
+ - option 2? for non browser clients
 
 ## Install tools
  - docker (https://docs.docker.com/engine/install/)
@@ -40,20 +40,20 @@ $ istioctl dashboard kiali
 $ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 ```
 
-## Option 1: grpc-web protocol
+## Option 1: gRPC-web protocol
 ### App graph
-![alt text](https://github.com/sandokandias/grpc-consumer-research/blob/main/docs/grpc-web-diagram.png?raw=true)
+![alt text](https://github.com/sandokandias/gRPC-consumer-research/blob/main/docs/gRPC-web-diagram.png?raw=true)
 
 ### Benefits
 - enables to create full end-to-end gRPC service architectures
+- strongly typed service
 - efficient serialization
 
 ### Cons
-- the grpc-web client still need to be translated into grpc-friendly calls
+- the gRPC-web client still need to be translated into gRPC-friendly calls
 - needs a special proxy (Envoy has built in support)
 
-
-### How to play
+### Example app
 1. Apply k8s objects
 ```bash
 $ kubectl apply -f ./k8s-manifests
@@ -66,4 +66,4 @@ $ kubectl -n istio-system get service istio-ingressgateway \
 3. Open the browser with http://<gateway_address>/ and make some requests
 
 
-## Option 2: custom BFF (Backend For Frontend) exposing HTPP and consuming GRPC
+## Option 2
