@@ -42,7 +42,7 @@ $ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 
 ## Option 1: gRPC-web protocol
 ### Diagram
-
+```
 +------------------------------------------------------------------------------------------------+
 |                                                                                                |
 |                                                                                                |
@@ -70,7 +70,7 @@ $ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 |                                             +------------------------------------------------+ |
 |                                                                                                |
 +------------------------------------------------------------------------------------------------+
-
+```
 
 ### Benefits
 - enables to create full end-to-end gRPC service architectures
