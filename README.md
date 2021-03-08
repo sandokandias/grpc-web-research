@@ -3,7 +3,7 @@ R&amp;D about how to consume gRPC services by traditional http clients.
 
 Will be presented 2 options of architecture: 
  - gRPC-web protocol for browser clients (https://grpc.io/docs/platforms/web/)
- - option 2? for non browser clients
+ - gRPC-mate
 
 ## Install tools
  - docker (https://docs.docker.com/engine/install/)
@@ -41,8 +41,34 @@ $ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 ```
 
 ## Option 1: gRPC-web protocol
-### App graph
-![alt text](https://github.com/sandokandias/gRPC-consumer-research/blob/main/docs/gRPC-web-diagram.png?raw=true)
+### Diagram
++------------------------------------------------------------------------------------------------+
+|                                                                                                |
+|                                                                                                |
+| +-------------------------+                 +------------------------------------------------+ |
+| |                         |                 |                                                | |
+| |    +--------------+     |                 |                                                | |
+| |    |              |     |            +----+-----+        +----------+         +----------+ | |
+| |    |              |     |    Proto   |          | Proto  |          |  Proto  |          | | |
+| |    |    JS App    +-----+------------+  envoy   +--------+  gRPC    +---------+  gRPC    | | |
+| |    |              |     |            |          |        |  service |         |  service | | |
+| |    |              |     |            +----+-----+        +----+-----+         +----------+ | |
+| |    +--------------+     |                 |                   |                            | |
+| |                         |                 |                   |                            | |
+| |  Browser   HTTP1        |                 |                   |               +----------+ | |
+| +-------------------------+                 |                   |        Proto  |          | | |
+|                                             |                   +---------------+  gRPC    | | |
+|                                             |                                   |  service | | |
+|                                             |                                   +----------+ | |
+|                                             |                                                | |
+|                                             |                                                | |
+|                                             |                                                | |
+|                                             |                                                | |
+|  gRPC-Web                                   |                                                | |
+|                                             |   Backend       HTTP2                          | |
+|                                             +------------------------------------------------+ |
+|                                                                                                |
++------------------------------------------------------------------------------------------------+
 
 ### Benefits
 - enables to create full end-to-end gRPC service architectures
@@ -66,4 +92,4 @@ $ kubectl -n istio-system get service istio-ingressgateway \
 3. Open the browser with http://<gateway_address>/ and make some requests
 
 
-## Option 2
+## Option 2: grpc-mate
