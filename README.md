@@ -45,8 +45,13 @@ $ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 ![alt text](https://github.com/sandokandias/grpc-consumer-research/blob/main/docs/grpc-web-diagram.png?raw=true)
 
 ### Benefits
+- enables to create full end-to-end gRPC service architectures
+- efficient serialization
 
 ### Cons
+- the grpc-web client still need to be translated into grpc-friendly calls
+- needs a special proxy (Envoy has built in support)
+
 
 ### How to play
 1. Apply k8s objects
