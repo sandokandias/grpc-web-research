@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"io"
 	"log"
 	"time"
 
@@ -26,7 +27,16 @@ func main() {
 	}
 	defer conn.Close()
 
-	client := api.NewTimeServiceClient(conn)
+	timeCli := api.NewTimeServiceClient(conn)
+	getTime(timeCli)
+
+	payCli := api.NewPaymentServiceClient(conn)
+	pay(payCli)
+}
+
+func getTime(client api.TimeServiceClient) {
+	fmt.Println("Time service")
+	fmt.Println("---------------------------")
 	deadline := time.Now().Add(time.Duration(10) * time.Second)
 	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
@@ -42,4 +52,33 @@ func main() {
 	table.AddRow("UNIX", "UTC")
 	table.AddRow(resp.Unix, resp.Utc)
 	fmt.Println(table)
+	fmt.Println("---------------------------")
+	fmt.Println()
+}
+
+func pay(client api.PaymentServiceClient) {
+	fmt.Println("Payment service")
+	fmt.Println("---------------------------")
+	deadline := time.Now().Add(time.Duration(10) * time.Second)
+	ctx, cancel := context.WithDeadline(context.Background(), deadline)
+	defer cancel()
+
+	req := &api.PayRequest{Amount: 100}
+	stream, err := client.Pay(ctx, req)
+	if err != nil {
+		log.Fatalf("failed pay: %v", err)
+	}
+
+	for {
+		resp, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatalf("%v.Pay(_) = _, %v", client, err)
+		}
+
+		fmt.Printf("Status: %s\n", resp.Status)
+	}
+	fmt.Println("---------------------------")
 }

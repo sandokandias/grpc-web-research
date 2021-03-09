@@ -13,8 +13,8 @@ type TimeService struct {
 	api.UnimplementedTimeServiceServer
 }
 
-// NewTimeService creates a new rpc unary service implementation
-func NewTimeService() TimeService {
+// NewTime creates a new rpc unary service implementation
+func NewTime() TimeService {
 	return TimeService{}
 }
 

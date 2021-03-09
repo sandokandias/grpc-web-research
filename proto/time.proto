@@ -13,10 +13,4 @@ message TimeRequest {}
 message TimeResponse {
 	int64 unix = 1;
     string utc = 2;
-	Error error = 3;
-}
-
-message Error {
-	string code = 1;
-	string message = 2;
 }

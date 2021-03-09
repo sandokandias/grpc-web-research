@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "github.com/sandokandias/grpc-consumer-research/backend/grpc/api";
+
+package proto;
+
+service PaymentService {
+	rpc pay (PayRequest) returns (stream PayResponse);
+}
+ 
+message PayRequest {
+    int64 amount = 1;
+}
+
+message PayResponse {
+    string status = 1;
+}

@@ -10,7 +10,7 @@ import (
 
 func TestGetTime(t *testing.T) {
 	t.Run("get time", func(t *testing.T) {
-		service := NewTimeService()
+		service := NewTime()
 		resp, err := service.GetTime(context.Background(), &api.TimeRequest{})
 
 		if err != nil {
