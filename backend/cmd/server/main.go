@@ -19,8 +19,11 @@ func main() {
 
 	timeService := service.NewTime()
 	payService := service.NewPayment()
+
 	grpcServer := grpc.NewServer()
+
 	api.RegisterTimeServiceServer(grpcServer, timeService)
 	api.RegisterPaymentServiceServer(grpcServer, payService)
+
 	grpcServer.Serve(lis)
 }

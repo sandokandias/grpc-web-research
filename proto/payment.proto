@@ -10,8 +10,11 @@ service PaymentService {
  
 message PayRequest {
     int64 amount = 1;
+    string description = 2;
 }
 
 message PayResponse {
-    string status = 1;
+    string payId = 1;
+    string status = 2;
+    string dateTime = 3;
 }

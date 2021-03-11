@@ -14,17 +14,17 @@ Will be presented 2 options of architecture:
 ## Setup k3d cluster (local)
 1. Create the k3d cluster
 ```bash
-$ k3d cluster create multinode-cluster \
+k3d cluster create multinode-cluster \
     --servers 1 --agents 3 --port 9080:80@loadbalancer \
     --port 9443:443@loadbalancer --api-port 6443 --k3s-server-arg '--no-deploy=traefik'
 ```
 2. Install istio on cluster
 ```bash
-$ istioctl install --set profile=demo
+istioctl install --set profile=demo
 ```
 3. Enable automatic istio injection
 ```bash
-$ kubectl label namespace default istio-injection=enabled
+kubectl label namespace default istio-injection=enabled
 ```
 4. Install kiali and addons (optional)
 ```bash
@@ -37,7 +37,7 @@ $ istioctl dashboard kiali
 
 ## Down k3d cluster
 ```bash
-$ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
+k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 ```
 
 ## Option 1: gRPC-web protocol
@@ -84,11 +84,11 @@ $ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 ### Example app
 1. Apply k8s objects
 ```bash
-$ kubectl apply -f ./k8s-manifests
+kubectl apply -f ./k8s-manifests
 ```
 2. Get the gateway address
 ```bash
-$ kubectl -n istio-system get service istio-ingressgateway \
+kubectl -n istio-system get service istio-ingressgateway \
    -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
 ```
 3. Open the browser with http://<gateway_address>/ and make some requests

@@ -1,0 +1,31 @@
+<h3>Payment</h3>
+
+<div *ngIf="payment">
+  <div>
+    <label for="description">Description</label>
+    <input id="description" type="text" class="form-control" [(ngModel)]="payment.description" placeholder="description">
+  </div>
+
+  <div>
+    <label for="amount">Amount</label>
+    <input id="amount" type="number" class="form-control" [(ngModel)]="payment.amount" placeholder="amount">
+  </div>
+  
+  <button (click)="handle()">Pay</button>
+</div>
+
+<div class="container">
+  <p> {{ payId }}</p>
+
+  <table class="table table-bordered">
+    <tr>
+      <th>Status</th>
+      <th>Date/Time</th>
+    </tr>
+
+    <tr *ngFor="let r of payResponse">
+      <td>{{ r.status }}</td>
+      <td>{{ r.dateTime }}</td>
+    </tr>
+  </table>
+</div>
