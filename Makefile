@@ -1,7 +1,7 @@
 SHELL=/bin/bash
 
-BIN_BACKEND_NAME=time-backend
-BIN_FRONTEND_NAME=time-frontend
+BIN_BACKEND_NAME=grpc-backend
+BIN_FRONTEND_NAME=grpc-frontend
 CMD_SERVER_PATH=./backend/cmd/server/main.go
 CMD_CLIENT_PATH=./backend/cmd/client/main.go
 BIN=bin
@@ -10,9 +10,9 @@ DIST_MAC=$(DIST)/darwin
 DIST_LINUX=$(DIST)/linux
 DIST_WIN=$(DIST)/windows
 PROTO_GO_DIR=backend/internal/grpc/api
-PROTO_JS_DIR=frontend/grpc/api
+PROTO_JS_DIR=frontend-angular/src/app/proto
 
-all: clean clean-proto gen-go-proto gen-js-proto build
+all: clean clean-proto gen-go-proto build gen-js-proto
 
 gen-go-proto:
 	protoc --go_out=$(PROTO_GO_DIR) \
@@ -21,9 +21,11 @@ gen-go-proto:
 		-I proto --go-grpc_opt=paths=source_relative proto/*.proto
 
 gen-js-proto:
-	protoc -I proto proto/*.proto \
-	    --js_out=import_style=commonjs:$(PROTO_JS_DIR) \
-	    --grpc-web_out=import_style=commonjs,mode=grpcwebtext:$(PROTO_JS_DIR)
+	./frontend-angular/node_modules/protoc/protoc/bin/protoc \
+		--plugin=protoc-gen-ts=./frontend-angular/node_modules/.bin/protoc-gen-ts \
+		--js_out=import_style=commonjs,binary:$(PROTO_JS_DIR) \
+		--ts_out=service=grpc-web:$(PROTO_JS_DIR) \
+		-I proto/ proto/*.proto
 
 build-linux:
 	mkdir -p $(DIST_LINUX)
@@ -60,7 +62,7 @@ build-backend-img:
 	docker build -t sandokandias/$(BIN_BACKEND_NAME) -f backend/Dockerfile .
 
 build-frontend-img:
-	docker build -t sandokandias/$(BIN_FRONTEND_NAME) -f frontend/Dockerfile .
+	docker build -t sandokandias/$(BIN_FRONTEND_NAME) -f frontend-angular/Dockerfile .
 
 release-frontend: build-frontend-img
 	docker push sandokandias/$(BIN_FRONTEND_NAME)
@@ -68,5 +70,5 @@ release-frontend: build-frontend-img
 release-backend: build-backend-img
 	docker push sandokandias/$(BIN_BACKEND_NAME)
 
-release: release-backend release-frontend
+release: release-backend release-frontend release-frontend-angular
 	
