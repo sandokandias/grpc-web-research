@@ -1,20 +1,26 @@
+<div class="container">
 <h3>Payment</h3>
 
-<div>
-  <div>
+<form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+  <div class="form-group">
     <label for="description">Description</label>
-    <input id="description" type="text" class="form-control" [(ngModel)]="payment.description" placeholder="description">
+    <input type="text" class="form-control" id="description" required [(ngModel)]="model.description" name="description" #description="ngModel">
+    <div [hidden]="description.valid || description.pristine"
+         class="alert alert-danger">
+      description is required
+    </div>
   </div>
-
-  <div>
-    <label for="amount">Amount</label>
-    <input id="amount" type="number" class="form-control" [(ngModel)]="payment.amount" placeholder="amount">
+  <div class="form-group">
+    <label for="amount">Description</label>
+    <input type="number" class="form-control" id="amount" required [(ngModel)]="model.description" name="amount" #amount="ngModel">
+    <div [hidden]="amount.valid || amount.pristine"
+         class="alert alert-danger">
+      amount is required
+    </div>
   </div>
-  
-  <button (click)="handle()">Pay</button>
-</div>
+  <button type="submit" class="btn btn-success">Pay</button>
+</form>
 
-<div class="container">
   <p> {{ payId }}</p>
 
   <table class="table table-bordered">
@@ -24,8 +30,9 @@
     </tr>
 
     <tr *ngFor="let r of payResponse">
-      <td>{{ r.status }}</td>
-      <td>{{ r.dateTime }}</td>
+      <td>{{ r.getStatus }}</td>
+      <td>{{ r.getDatetime }}</td>
     </tr>
   </table>
+
 </div>
