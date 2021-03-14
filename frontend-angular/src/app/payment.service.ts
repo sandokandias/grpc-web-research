@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Payment } from './payment';
 import { PayRequest, PayResponse } from './proto/payment_pb';
 import {PaymentServiceClient, Status} from './proto/payment_pb_service'
-import { WINDOW } from './window.providers';
+import {environment} from '../environments/environment'
 
 @Injectable({
     providedIn: 'root'
@@ -11,8 +11,8 @@ import { WINDOW } from './window.providers';
 export class PaymentService {
     client: PaymentServiceClient;
 
-    constructor(@Inject(WINDOW) private window: Window) {
-        this.client = new PaymentServiceClient('http://' + this.window.location.hostname)
+    constructor() {
+        this.client = new PaymentServiceClient(environment.paymentServiceUrl)
     }
 
     pay(path: string, val: Payment): Observable<PayResponse> {

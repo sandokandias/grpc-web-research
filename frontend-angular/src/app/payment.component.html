@@ -1,7 +1,7 @@
 <div class="container">
-<h3>Payment</h3>
+<h3>Streaming Example - Payment</h3>
 
-<form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+<form (ngSubmit)="onSubmit()" #payForm="ngForm">
   <div class="form-group">
     <label for="description">Description</label>
     <input type="text" class="form-control" id="description" required [(ngModel)]="model.description" name="description" #description="ngModel">
@@ -11,16 +11,17 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="amount">Description</label>
-    <input type="number" class="form-control" id="amount" required [(ngModel)]="model.description" name="amount" #amount="ngModel">
+    <label for="amount">Amount</label>
+    <input type="number" class="form-control" id="amount" required [(ngModel)]="model.amount" name="amount" #amount="ngModel">
     <div [hidden]="amount.valid || amount.pristine"
          class="alert alert-danger">
       amount is required
     </div>
   </div>
-  <button type="submit" class="btn btn-success">Pay</button>
+  <button type="submit" [disabled]="!payForm.form.valid" class="btn btn-success">Pay</button>
 </form>
 
+<div [hidden]="!submitted">
   <p> {{ payId }}</p>
 
   <table class="table table-bordered">
@@ -34,5 +35,6 @@
       <td>{{ r.getDatetime }}</td>
     </tr>
   </table>
+</div>
 
 </div>
