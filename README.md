@@ -97,6 +97,7 @@ kubectl -n istio-system get service istio-ingressgateway \
    -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
 ```
 3. Edit your hosts
+   
    <ip_addr> payment.grpcweb.local
    
 4. Open the browser with http://payment.grpcweb.local/
