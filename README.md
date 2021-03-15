@@ -1,9 +1,10 @@
 # gRPC-consumer-research
 R&amp;D about how to consume gRPC services by traditional http clients.
 
-Will be presented 2 options of architecture: 
- - gRPC-web protocol for browser clients (https://grpc.io/docs/platforms/web/)
- - gRPC-mate
+Will be presented 3 options of architecture: 
+ - improbable-eng/grpc-web protocol for browser clients (https://github.com/improbable-eng/grpc-web)
+ - google/gRPC-web ((https://grpc.io/docs/platforms/web/))
+ - gRPC-mate (https://grpcmate.io/)
 
 ## Install tools
  - docker (https://docs.docker.com/engine/install/)
@@ -40,7 +41,11 @@ $ istioctl dashboard kiali
 k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 ```
 
-## Option 1: gRPC-web protocol
+## Option 1: improbable-eng/gRPC-web
+Implementation of the Google partner called Improbable Engineering (https://www.improbable.io/).
+The protocol supports unary and streaming calls using protobuf.
+It's my choice for the sample app demo.
+
 ### Diagram
 ```
 +------------------------------------------------------------------------------------------------+
@@ -56,7 +61,7 @@ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 | |    |              |     |            +----+-----+        +----+-----+         +----------+ | |
 | |    +--------------+     |                 |                   |                            | |
 | |                         |                 |                   |                            | |
-| |  Browser   HTTP1        |                 |                   |               +----------+ | |
+| |  Browser                |                 |                   |               +----------+ | |
 | +-------------------------+                 |                   |        Proto  |          | | |
 |                                             |                   +---------------+  gRPC    | | |
 |                                             |                                   |  service | | |
@@ -66,7 +71,7 @@ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 |                                             |                                                | |
 |                                             |                                                | |
 |  gRPC-Web                                   |                                                | |
-|                                             |   Backend       HTTP2                          | |
+|                                             |   Backend                                      | |
 |                                             +------------------------------------------------+ |
 |                                                                                                |
 +------------------------------------------------------------------------------------------------+
@@ -77,11 +82,11 @@ k3d cluster stop multinode-cluster && k3d cluster delete multinode-cluster
 - strongly typed service
 - efficient serialization
 
-### Cons
+### Trade-off
 - the gRPC-web client still need to be translated into gRPC-friendly calls
 - needs a special proxy (Envoy has built in support)
 
-### Example app
+### Run the example app (stream use case)
 1. Apply k8s objects
 ```bash
 kubectl apply -f ./k8s-manifests
@@ -91,7 +96,17 @@ kubectl apply -f ./k8s-manifests
 kubectl -n istio-system get service istio-ingressgateway \
    -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
 ```
-3. Open the browser with http://<gateway_address>/ and make some requests
+3. Edit your hosts
+   <ip_addr> payment.grpcweb.local
+   
+4. Open the browser with http://payment.grpcweb.local/
 
 
-## Option 2: grpc-mate
+## Option 2: google/gRPC-web
+Default implementation of the spec. Supports proto and text formats.
+ - grpc-web-text: unary and streaming calls
+ - grpc-web+proto: only unary calls
+
+
+## Option 2: gRPC-mate
+A dynamic proxy server that translates JSON HTTP requests into gRPC calls.
