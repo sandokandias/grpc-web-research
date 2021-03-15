@@ -113,3 +113,9 @@ Default implementation of the spec. Supports proto and text formats.
 ## Option 3: gRPC-mate
 A dynamic proxy server that translates JSON HTTP requests into gRPC calls.
 It is different than grpc-gateway in that it dynamically maps the gRPC service definitions into HTTP endpoints, without having to compile against the Proto definition files and generate code upon service definition updates, like grpc-gateway does.
+
+
+## Roadmap
+ - Test gRPC metadata (multi-tenant use case)
+ - Demo app for gRPC-mate option
+ - Benchmarking
