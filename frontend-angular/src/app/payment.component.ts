@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Payment } from './payment';
 import { PaymentService } from './payment.service';
+import { PaymentStatus } from './paymentstatus';
 import { PayResponse } from './proto/payment_pb';
 
 @Component({
@@ -11,7 +12,7 @@ import { PayResponse } from './proto/payment_pb';
 })
 export class PaymentComponent  {
   model: Payment = new Payment();
-  status: Observable<Array<PayResponse>>;
+  status: Observable<Array<PaymentStatus>>;
 
   submitted = false;
 

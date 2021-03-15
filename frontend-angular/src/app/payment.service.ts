@@ -5,6 +5,7 @@ import { Payment } from './payment';
 import { PayRequest, PayResponse } from './proto/payment_pb';
 import {PaymentServiceClient, Status} from './proto/payment_pb_service'
 import {environment} from '../environments/environment'
+import { PaymentStatus } from './paymentstatus';
 
 @Injectable({
     providedIn: 'root'
@@ -12,9 +13,9 @@ import {environment} from '../environments/environment'
 export class PaymentService implements OnDestroy {
     client: PaymentServiceClient;
 
-    status: PayResponse[] = [];
+    status: PaymentStatus[] = [];
 
-    private statusSource = new Subject<Array<PayResponse>>();
+    private statusSource = new Subject<Array<PaymentStatus>>();
 
     status$ = this.statusSource.asObservable().publishReplay(1).refCount();
 
@@ -35,11 +36,15 @@ export class PaymentService implements OnDestroy {
             stream.on('status', (status: Status) => {
                 console.log('PaymentService.pay.status', status);
             });
-            stream.on('data', (message: any) => {
-                console.log('PaymentService.pay.data', message.toObject());
-                this.status.push(message.toObject() as PayResponse);
+            stream.on('data', (message: PayResponse) => {
+                console.log('PaymentService.pay.data', message);
+                let st = new PaymentStatus(
+                    message.getPayid(),
+                    message.getStatus(),
+                    message.getDatetime()
+                )
+                this.status.push(st);
                 this.statusSource.next(this.status);
-
             });
             stream.on('end', () => {
                 console.log('PaymentService.pay.end');

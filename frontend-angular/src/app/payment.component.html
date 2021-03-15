@@ -30,9 +30,9 @@
     </tr>
 
     <tr *ngFor="let s of (status | async)">
-      <td>{{ s.getPayid }}</td>
-      <td>{{ s.getStatus }}</td>
-      <td>{{ s.getDatetime }}</td>
+      <td>{{ s.id }}</td>
+      <td>{{ s.status }}</td>
+      <td>{{ s.dateTime }}</td>
     </tr>
   </table>
 </div>
