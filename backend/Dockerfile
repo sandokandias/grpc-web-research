@@ -12,10 +12,10 @@ RUN ls -la
 COPY backend/cmd/ ./cmd/
 COPY backend/internal/ ./internal/
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ./time-backend -v ./cmd/server/main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ./grpc-backend -v ./cmd/server/main.go
 
 FROM alpine as release
 RUN apk add --no-cache ca-certificates
-COPY --from=builder /backend/time-backend /time-backend
+COPY --from=builder /backend/grpc-backend /grpc-backend
 EXPOSE 5050
-ENTRYPOINT ["/time-backend"]
+ENTRYPOINT ["/grpc-backend"]

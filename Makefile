@@ -21,7 +21,7 @@ gen-go-proto:
 		-I proto --go-grpc_opt=paths=source_relative proto/*.proto
 
 gen-js-proto:
-	./frontend-angular/node_modules/protoc/protoc/bin/protoc \
+	protoc \
 		--plugin=protoc-gen-ts=./frontend-angular/node_modules/.bin/protoc-gen-ts \
 		--js_out=import_style=commonjs,binary:$(PROTO_JS_DIR) \
 		--ts_out=service=grpc-web:$(PROTO_JS_DIR) \
@@ -70,5 +70,5 @@ release-frontend: build-frontend-img
 release-backend: build-backend-img
 	docker push sandokandias/$(BIN_BACKEND_NAME)
 
-release: release-backend release-frontend release-frontend-angular
+release: release-backend release-frontend
 	

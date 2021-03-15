@@ -1,5 +1,6 @@
-import { Injectable, Inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import 'rxjs/add/operator/publishReplay';
 import { Payment } from './payment';
 import { PayRequest, PayResponse } from './proto/payment_pb';
 import {PaymentServiceClient, Status} from './proto/payment_pb_service'
@@ -8,15 +9,24 @@ import {environment} from '../environments/environment'
 @Injectable({
     providedIn: 'root'
 })
-export class PaymentService {
+export class PaymentService implements OnDestroy {
     client: PaymentServiceClient;
+
+    status: PayResponse[] = [];
+
+    private statusSource = new Subject<Array<PayResponse>>();
+
+    status$ = this.statusSource.asObservable().publishReplay(1).refCount();
 
     constructor() {
         this.client = new PaymentServiceClient(environment.paymentServiceUrl)
     }
 
-    pay(path: string, val: Payment): Observable<PayResponse> {
-        return new Observable(obs => {
+    ngOnDestroy(): void {
+        this.statusSource.complete();
+    }
+
+    pay(path: string, val: Payment){
             console.log("PaymentService", path, val)
             const req = new PayRequest();
             req.setAmount(val.amount);
@@ -27,12 +37,13 @@ export class PaymentService {
             });
             stream.on('data', (message: any) => {
                 console.log('PaymentService.pay.data', message.toObject());
-                obs.next(message.toObject() as PayResponse);
+                this.status.push(message.toObject() as PayResponse);
+                this.statusSource.next(this.status);
+
             });
             stream.on('end', () => {
                 console.log('PaymentService.pay.end');
-                obs.complete();
             });
-        });
+        
     }
 }

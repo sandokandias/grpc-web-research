@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: timefrontend
+  name: grpcfrontend
 spec:
   type: ClusterIP
   selector:
-    app: timefrontend
+    app: grpcfrontend
   ports:
   - name: http
     port: 80
@@ -14,25 +14,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: timefrontend
+  name: grpcfrontend
   labels:
-    app: timefrontend
+    app: grpcfrontend
 spec:
   selector:
     matchLabels:
-      app: timefrontend
+      app: grpcfrontend
   replicas: 1
   template:
     metadata:
       labels:
-        app: timefrontend
+        app: grpcfrontend
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       serviceAccountName: default
       containers:
-      - name: timefrontend
-        image: sandokandias/time-frontend
+      - name: grpcfrontend
+        image: sandokandias/grpc-frontend
         imagePullPolicy: Always
         ports:
         - containerPort: 80

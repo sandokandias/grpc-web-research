@@ -25,6 +25,7 @@
     "grpc": "^1.24.5",
     "protoc": "^1.0.4",
     "rxjs": "~6.6.0",
+    "rxjs-compat": "~6.6.6",
     "ts-protoc-gen": "^0.14.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

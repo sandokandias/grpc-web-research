@@ -34,10 +34,6 @@ func (PaymentService) Pay(request *api.PayRequest, stream api.PaymentService_Pay
 
 	payID := uuid.New().String()
 
-	stream.Send(&api.PayResponse{
-		Status: "processing",
-	})
-
 	time.Sleep(time.Second * 1)
 	log.Printf("authorizing payment: %v\n", request)
 	if err := stream.Send(&api.PayResponse{

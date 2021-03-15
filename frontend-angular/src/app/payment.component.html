@@ -22,17 +22,17 @@
 </form>
 
 <div [hidden]="!submitted">
-  <p> {{ payId }}</p>
-
   <table class="table table-bordered">
     <tr>
+      <th>Payment ID</th>
       <th>Status</th>
       <th>Date/Time</th>
     </tr>
 
-    <tr *ngFor="let r of payResponse">
-      <td>{{ r.getStatus }}</td>
-      <td>{{ r.getDatetime }}</td>
+    <tr *ngFor="let s of (status | async)">
+      <td>{{ s.getPayid }}</td>
+      <td>{{ s.getStatus }}</td>
+      <td>{{ s.getDatetime }}</td>
     </tr>
   </table>
 </div>

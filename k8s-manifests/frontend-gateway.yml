@@ -25,10 +25,10 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /proto.TimeService
+        prefix: /proto.PaymentService
     route:
     - destination:
-        host: timebackend
+        host: grpcbackend
     corsPolicy:
       allowOrigin:
         - "*"
@@ -59,6 +59,6 @@ spec:
       allowCredentials: true
   - route:
     - destination:
-        host: timefrontend
+        host: grpcfrontend
         port:
           number: 80

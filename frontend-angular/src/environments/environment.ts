@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  paymentServiceUrl: 'http://17.18.0.2'
+  paymentServiceUrl: 'http://payment.grpcweb.local'
 };
 
 /*

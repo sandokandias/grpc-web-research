@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Payment } from './payment';
 import { PaymentService } from './payment.service';
 import { PayResponse } from './proto/payment_pb';
@@ -8,21 +9,20 @@ import { PayResponse } from './proto/payment_pb';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
-export class PaymentComponent {
+export class PaymentComponent  {
   model: Payment = new Payment();
-  payId: string = "";
-  payResponse: PayResponse[] = [];
+  status: Observable<Array<PayResponse>>;
+
   submitted = false;
 
   constructor(
     private service: PaymentService
-    ){}
+    ){
+      this.status = this.service.status$;
+    }
 
     onSubmit () {
      this.submitted = true;
-     this.service.pay('pay', this.model).subscribe(response => {
-        this.payId = "Payment ID: " + response.getPayid();
-        this.payResponse.push(response);
-     });
+     this.service.pay('pay', this.model);
   }
 } 
