@@ -1,4 +1,4 @@
-# gRPC-consumer-research
+# gRPC-web-research
 R&amp;D about how to consume gRPC services by traditional http clients.
 
 Will be presented 3 options of protocols: 
