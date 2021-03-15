@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/sandokandias/grpc-consumer-research/backend/grpc/api";
+option go_package = "github.com/sandokandias/grpc-web-research/backend/grpc/api";
 
 package proto;
 

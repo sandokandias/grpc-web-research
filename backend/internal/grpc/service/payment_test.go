@@ -3,7 +3,7 @@ package service
 import (
 	"testing"
 
-	"github.com/sandokandias/grpc-consumer-research/backend/internal/grpc/api"
+	"github.com/sandokandias/grpc-web-research/backend/internal/grpc/api"
 	"google.golang.org/grpc"
 )
 

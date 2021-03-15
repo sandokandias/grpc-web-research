@@ -1,4 +1,4 @@
-module github.com/sandokandias/grpc-consumer-research/backend
+module github.com/sandokandias/grpc-web-research/backend
 
 go 1.16
 

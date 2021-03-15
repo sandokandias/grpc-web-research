@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/sandokandias/grpc-consumer-research/backend/internal/grpc/api"
+	"github.com/sandokandias/grpc-web-research/backend/internal/grpc/api"
 )
 
 // TimeService unary rpc service implementation

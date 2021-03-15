@@ -8,7 +8,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/sandokandias/grpc-consumer-research/backend/internal/grpc/api"
+	"github.com/sandokandias/grpc-web-research/backend/internal/grpc/api"
 	"google.golang.org/grpc"
 
 	"github.com/gosuri/uitable"
@@ -63,7 +63,7 @@ func pay(client api.PaymentServiceClient) {
 	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
 
-	req := &api.PayRequest{Amount: 100}
+	req := &api.PayRequest{Amount: 100, Description: "test"}
 	stream, err := client.Pay(ctx, req)
 	if err != nil {
 		log.Fatalf("failed pay: %v", err)
@@ -78,7 +78,7 @@ func pay(client api.PaymentServiceClient) {
 			log.Fatalf("%v.Pay(_) = _, %v", client, err)
 		}
 
-		fmt.Printf("Status: %s\n", resp.Status)
+		fmt.Printf("%v\n", resp)
 	}
 	fmt.Println("---------------------------")
 }

@@ -4,8 +4,8 @@ import (
 	"log"
 	"net"
 
-	"github.com/sandokandias/grpc-consumer-research/backend/internal/grpc/api"
-	"github.com/sandokandias/grpc-consumer-research/backend/internal/grpc/service"
+	"github.com/sandokandias/grpc-web-research/backend/internal/grpc/api"
+	"github.com/sandokandias/grpc-web-research/backend/internal/grpc/service"
 
 	"google.golang.org/grpc"
 )
