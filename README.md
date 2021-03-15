@@ -116,6 +116,7 @@ It is different than grpc-gateway in that it dynamically maps the gRPC service d
 
 
 ## Roadmap
- - Test gRPC metadata (multi-tenant use case)
+ - Send/receive metadata (multi-tenant use case)
+ - Error handling
  - Demo app for gRPC-mate option
  - Benchmarking
