@@ -15,7 +15,7 @@ export class PaymentService implements OnDestroy {
 
     status: PaymentStatus[] = [];
 
-    private statusSource = new Subject<Array<PaymentStatus>>();
+    statusSource = new Subject<Array<PaymentStatus>>();
 
     status$ = this.statusSource.asObservable().publishReplay(1).refCount();
 

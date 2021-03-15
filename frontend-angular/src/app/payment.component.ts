@@ -24,6 +24,10 @@ export class PaymentComponent  {
 
     onSubmit () {
      this.submitted = true;
+     
+     this.service.status = [];
+     this.service.statusSource.next();
+
      this.service.pay('pay', this.model);
   }
 } 
