@@ -1,8 +1,8 @@
 # gRPC-consumer-research
 R&amp;D about how to consume gRPC services by traditional http clients.
 
-Will be presented 3 options of architecture: 
- - improbable-eng/grpc-web protocol for browser clients (https://github.com/improbable-eng/grpc-web)
+Will be presented 3 options of protocols: 
+ - improbable-eng/grpc-web (https://github.com/improbable-eng/grpc-web)
  - google/gRPC-web ((https://grpc.io/docs/platforms/web/))
  - gRPC-mate (https://grpcmate.io/)
 
