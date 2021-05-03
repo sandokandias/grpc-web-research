@@ -11,6 +11,7 @@ DIST_LINUX=$(DIST)/linux
 DIST_WIN=$(DIST)/windows
 PROTO_GO_DIR=backend/internal/grpc/api
 PROTO_JS_DIR=frontend-angular/src/app/proto
+PROTO_JS_REACT_DIR=frontend-react/src/proto
 
 all: clean clean-proto gen-go-proto build gen-js-proto
 
@@ -25,6 +26,13 @@ gen-js-proto:
 		--plugin=protoc-gen-ts=./frontend-angular/node_modules/.bin/protoc-gen-ts \
 		--js_out=import_style=commonjs,binary:$(PROTO_JS_DIR) \
 		--ts_out=service=grpc-web:$(PROTO_JS_DIR) \
+		-I proto/ proto/*.proto
+
+gen-js-react-proto:
+	protoc \
+		--plugin=protoc-gen-ts=./frontend-react/node_modules/.bin/protoc-gen-ts \
+		--js_out=import_style=commonjs,binary:$(PROTO_JS_REACT_DIR) \
+		--ts_out=service=grpc-web:$(PROTO_JS_REACT_DIR) \
 		-I proto/ proto/*.proto
 
 build-linux:
