@@ -14,9 +14,35 @@ const Home = () => {
   const [amount, setAmount] = useState('');
   const [response, setResponse] = useState<Response[]>([]);
 
+  const validateInputs = () => {
+    if (!description.match(/[a-zA-Z]/) && amount === '') {
+      alert('Please, enter with a description and amount value');
+      return false;
+    }
+
+    if (!description.match(/[a-zA-Z]/)) {
+      alert('Description input must not be empty');
+      return false;
+    }
+
+    if (description.length < 3) {
+      alert('Desciption must have at least 3 letters');
+    }
+
+    if (amount === '') {
+      alert('Amount input must not be empty');
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setResponse([]);
+
+    if (!validateInputs()) return;
+
     const client = new PaymentServiceClient('http://payment.grpcweb.local');
     const req = new PayRequest();
     req.setDescription(description);
