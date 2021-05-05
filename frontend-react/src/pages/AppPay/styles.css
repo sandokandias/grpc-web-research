@@ -1,4 +1,4 @@
-form {
+.container {
   width: 60%;
   position: absolute;
   top: 15%;
@@ -35,4 +35,13 @@ button {
   border-radius: 6px;
   font-weight: bold;
   font-size: 14px;
+}
+
+table {
+  margin-top: 20px;
+  border-spacing: 30px 15px;
+}
+
+thead {
+  text-align: left;
 }

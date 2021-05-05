@@ -3,12 +3,20 @@ import { PayRequest, PayResponse } from '../../proto/payment_pb';
 import { PaymentServiceClient, Status } from '../../proto/payment_pb_service';
 import './styles.css';
 
+interface Response {
+  paymentID: string;
+  status: string;
+  dateTime: string;
+}
+
 const Home = () => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
+  const [response, setResponse] = useState<Response[]>([]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setResponse([]);
     const client = new PaymentServiceClient('http://payment.grpcweb.local');
     const req = new PayRequest();
     req.setDescription(description);
@@ -20,10 +28,18 @@ const Home = () => {
     });
 
     stream.on('data', (message: PayResponse) => {
+      const res: Response = {
+        paymentID: message.getPayid(),
+        status: message.getStatus(),
+        dateTime: message.getDatetime(),
+      };
+
       console.log('PaymentService.pay.data', message);
-      console.log('PayID', message.getPayid());
-      console.log('Status', message.getStatus());
-      console.log('DateTime', message.getDatetime());
+      console.log('PayID', res.paymentID);
+      console.log('Status', res.status);
+      console.log('DateTime', res.dateTime);
+
+      setResponse((oldResponse) => [...oldResponse, res]);
     });
 
     stream.on('end', () => {
@@ -32,23 +48,46 @@ const Home = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Streaming Example - Payment</h2>
-      <div>
-        <label htmlFor="description">Description</label>
-        <input
-          type="text"
-          id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="amount">Amount</label>
-        <input type="number" id="amount" value={amount} onChange={(e) => setAmount(e.target.value)} />
-      </div>
-      <button type="submit">Pay</button>
-    </form>
+    <div className="container">
+      <form onSubmit={handleSubmit}>
+        <h2>Streaming Example - Payment</h2>
+        <div>
+          <label htmlFor="description">Description</label>
+          <input
+            type="text"
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="amount">Amount</label>
+          <input type="number" id="amount" value={amount} onChange={(e) => setAmount(e.target.value)} />
+        </div>
+        <button type="submit">Pay</button>
+      </form>
+
+      {!!response.length && (
+        <table>
+          <thead>
+            <tr>
+              <th>PaymentID</th>
+              <th>Status</th>
+              <th>Date/Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {response.map((res, index) => (
+              <tr key={index}>
+                <td>{res.paymentID}</td>
+                <td>{res.status}</td>
+                <td>{res.dateTime}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
   );
 };
 
