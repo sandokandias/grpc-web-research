@@ -21,3 +21,5 @@ bin/
 
 node_modules/
 .idea/
+backend-kotlin/build/
+backend-kotlin/.gradle/

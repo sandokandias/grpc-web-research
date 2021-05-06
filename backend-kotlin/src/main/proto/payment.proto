@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.web.research";
+option java_outer_classname = "Payment";
+option objc_class_prefix = "HLW";
+
+package grpc.web.research;
+
+service PaymentService {
+	rpc pay (PayRequest) returns (stream PayResponse);
+}
+ 
+message PayRequest {
+    int64 amount = 1;
+    string description = 2;
+}
+
+message PayResponse {
+    string payId = 1;
+    string status = 2;
+    string dateTime = 3;
+}
