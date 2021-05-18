@@ -1,15 +1,17 @@
 package grpc.web.research
 
 import io.grpc.stub.StreamObserver
+import proto.Payment
+import proto.PaymentServiceGrpc
 import java.time.Instant
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class PaymentService : PaymentServiceGrpc.PaymentServiceImplBase() {
-    override fun pay(request: PayRequest?, responseObserver: StreamObserver<PayResponse>?) {
+    override fun pay(request: Payment.PayRequest?, responseObserver: StreamObserver<Payment.PayResponse>?) {
         val payID = UUID.randomUUID().toString()
         println("Authorizing payment: $request")
-        var response = PayResponse
+        var response = Payment.PayResponse
             .newBuilder()
             .setStatus("Authorizing")
             .setPayId(payID)
@@ -19,7 +21,7 @@ class PaymentService : PaymentServiceGrpc.PaymentServiceImplBase() {
 
         TimeUnit.SECONDS.sleep(1)
         println("Payment authorized: $request")
-        response = PayResponse
+        response = Payment.PayResponse
             .newBuilder()
             .setStatus("Authorized")
             .setPayId(payID)
@@ -29,7 +31,7 @@ class PaymentService : PaymentServiceGrpc.PaymentServiceImplBase() {
 
         TimeUnit.SECONDS.sleep(1)
         println("Confirming payment: $request")
-        response = PayResponse
+        response = Payment.PayResponse
             .newBuilder()
             .setStatus("Confirming")
             .setPayId(payID)
@@ -39,7 +41,7 @@ class PaymentService : PaymentServiceGrpc.PaymentServiceImplBase() {
 
         TimeUnit.SECONDS.sleep(1)
         println("Payment confirmed: $request")
-        response = PayResponse
+        response = Payment.PayResponse
             .newBuilder()
             .setStatus("Confirmed")
             .setPayId(payID)
@@ -49,7 +51,7 @@ class PaymentService : PaymentServiceGrpc.PaymentServiceImplBase() {
 
         TimeUnit.SECONDS.sleep(1)
         println("Payment done: $request")
-        response = PayResponse
+        response = Payment.PayResponse
             .newBuilder()
             .setStatus("Done")
             .setPayId(payID)
